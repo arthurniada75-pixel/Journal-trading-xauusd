@@ -5,6 +5,7 @@ export default function App() {
   const [session, setSession] = useState(null);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [mode, setMode] = useState("login");
   const [message, setMessage] = useState("");
   const [loading, setLoading] = useState(false);
 
@@ -20,10 +21,32 @@ export default function App() {
     return () => data.subscription.unsubscribe();
   }, []);
 
-  async function handleLogin(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
     setLoading(true);
     setMessage("");
+
+    if (mode === "signup") {
+      const { error } = await supabase.auth.signUp({
+        email,
+        password,
+        options: {
+          emailRedirectTo: window.location.href
+        }
+      });
+
+      setLoading(false);
+
+      if (error) {
+        setMessage(error.message);
+      } else {
+        setMessage(
+          "Compte créé. Vérifie ta boîte e-mail pour confirmer ton adresse."
+        );
+      }
+
+      return;
+    }
 
     const { error } = await supabase.auth.signInWithPassword({
       email,
@@ -31,7 +54,10 @@ export default function App() {
     });
 
     setLoading(false);
-    if (error) setMessage("Connexion impossible. Vérifie ton e-mail et ton mot de passe.");
+
+    if (error) {
+      setMessage("Connexion impossible. Vérifie ton e-mail et ton mot de passe.");
+    }
   }
 
   async function handleLogout() {
@@ -72,10 +98,14 @@ export default function App() {
       <section className="login-card">
         <span className="brand-mark">A</span>
         <p className="eyebrow">VOTRE ESPACE DE TRADING</p>
-        <h1>Aurum Journal</h1>
-        <p className="muted">Connectez-vous à votre journal XAUUSD.</p>
+        <h1>{mode === "login" ? "Aurum Journal" : "Créer un compte"}</h1>
+        <p className="muted">
+          {mode === "login"
+            ? "Connecte-toi à ton journal XAUUSD."
+            : "Inscris-toi avec une adresse autorisée pour accéder au journal."}
+        </p>
 
-        <form className="form" onSubmit={handleLogin}>
+        <form className="form" onSubmit={handleSubmit}>
           <label>
             Adresse e-mail
             <input
@@ -92,16 +122,35 @@ export default function App() {
               type="password"
               value={password}
               onChange={(event) => setPassword(event.target.value)}
+              minLength={8}
               required
             />
           </label>
 
           <button className="button" type="submit" disabled={loading}>
-            {loading ? "Connexion…" : "Se connecter"}
+            {loading
+              ? "Patiente…"
+              : mode === "login"
+                ? "Se connecter"
+                : "Créer mon compte"}
           </button>
         </form>
 
         {message && <p className="message">{message}</p>}
+
+        <button
+          className="button secondary"
+          style={{ width: "100%", marginTop: 12 }}
+          type="button"
+          onClick={() => {
+            setMode(mode === "login" ? "signup" : "login");
+            setMessage("");
+          }}
+        >
+          {mode === "login"
+            ? "Pas encore de compte ? S’inscrire"
+            : "J’ai déjà un compte"}
+        </button>
       </section>
     </main>
   );
