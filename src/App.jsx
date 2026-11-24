@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { supabase } from "./lib/supabase";
+import TradeJournal from "./components/TradeJournal";
 
 export default function App() {
   const [session, setSession] = useState(null);
@@ -84,7 +85,7 @@ export default function App() {
         </section>
 
         <section className="panel">
-          <h2>Votre espace de trading</h2>
+         <TradeJournal />
           <p className="muted">
             La connexion fonctionne. Nous ajouterons le journal et le calendrier ensuite.
           </p>
