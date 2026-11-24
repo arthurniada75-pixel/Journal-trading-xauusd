@@ -86,13 +86,25 @@ export default function App() {
 
         <section className="panel">
          <TradeJournal />
-          <p className="muted">
-            La connexion fonctionne. Nous ajouterons le journal et le calendrier ensuite.
-          </p>
-        </section>
-      </main>
-    );
-  }
+          
+       <section className="panel">
+  <h2>Calendrier économique</h2>
+  <p className="muted">
+    Événements économiques américains à surveiller pour le XAUUSD.
+  </p>
+
+  <iframe
+    title="Calendrier économique TradingView"
+    src={`${import.meta.env.BASE_URL}calendar.html`}
+    loading="lazy"
+    style={{
+      width: "100%",
+      height: "620px",
+      border: 0,
+      borderRadius: "12px"
+    }}
+  />
+</section>
 
   return (
     <main className="login-page">
