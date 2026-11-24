@@ -100,9 +100,48 @@ export default function TradeJournal() {
     setMessage("Trade enregistré.");
     await loadTrades();
   }
-
+  const closedTrades = trades.filter((trade) => trade.pnl !== null);
+  const totalPnl = closedTrades.reduce(
+    (sum, trade) => sum + Number(trade.pnl),
+    0
+  );
+  const winningTrades = closedTrades.filter(
+    (trade) => Number(trade.pnl) > 0
+  ).length;
+  const winRate = closedTrades.length
+    ? Math.round((winningTrades / closedTrades.length) * 100)
+    : 0;
+  
   return (
     <>
+            <section
+        style={{
+          display: "grid",
+          gridTemplateColumns: "repeat(auto-fit, minmax(180px, 1fr))",
+          gap: "16px",
+          marginBottom: "20px"
+        }}
+      >
+        <article className="panel">
+          <p className="eyebrow">P&L NET</p>
+          <h2>{formatMoney(totalPnl)}</h2>
+          <p className="muted">Total des trades clôturés</p>
+        </article>
+
+        <article className="panel">
+          <p className="eyebrow">TRADES</p>
+          <h2>{trades.length}</h2>
+          <p className="muted">Trades enregistrés</p>
+        </article>
+
+        <article className="panel">
+          <p className="eyebrow">TAUX DE RÉUSSITE</p>
+          <h2>{winRate}%</h2>
+          <p className="muted">
+            {winningTrades} gagnants sur {closedTrades.length} clôturés
+          </p>
+        </article>
+      </section>
       <section className="panel">
         <h2>Ajouter un trade XAUUSD</h2>
 
