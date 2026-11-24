@@ -73,6 +73,7 @@ export default function App() {
             <span className="brand-mark">A</span>
             <span>Aurum Journal</span>
           </div>
+
           <button className="button secondary" onClick={handleLogout}>
             Déconnexion
           </button>
@@ -85,26 +86,28 @@ export default function App() {
         </section>
 
         <section className="panel">
-         <TradeJournal />
-          
-       <section className="panel">
-  <h2>Calendrier économique</h2>
-  <p className="muted">
-    Événements économiques américains à surveiller pour le XAUUSD.
-  </p>
+          <h2>Calendrier économique</h2>
+          <p className="muted">
+            Événements économiques américains à surveiller pour le XAUUSD.
+          </p>
 
-  <iframe
-    title="Calendrier économique TradingView"
-    src={`${import.meta.env.BASE_URL}calendar.html`}
-    loading="lazy"
-    style={{
-      width: "100%",
-      height: "620px",
-      border: 0,
-      borderRadius: "12px"
-    }}
-  />
-</section>
+          <iframe
+            title="Calendrier économique TradingView"
+            src={`${import.meta.env.BASE_URL}calendar.html`}
+            loading="lazy"
+            style={{
+              width: "100%",
+              height: "620px",
+              border: 0,
+              borderRadius: "12px"
+            }}
+          />
+        </section>
+
+        <TradeJournal />
+      </main>
+    );
+  }
 
   return (
     <main className="login-page">
