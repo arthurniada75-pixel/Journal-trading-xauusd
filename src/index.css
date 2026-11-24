@@ -200,3 +200,56 @@ input:focus {
     padding: 26px 22px;
   }
 }
+
+.form select,
+.form textarea {
+  width: 100%;
+  border: 1px solid #d8e2ed;
+  border-radius: 10px;
+  background: #fbfdff;
+  padding: 12px 13px;
+  color: #18324d;
+}
+
+.form select:focus,
+.form textarea:focus {
+  border-color: #3979b9;
+  outline: 3px solid #3979b922;
+}
+
+.panel + .panel {
+  margin-top: 20px;
+}
+
+.table-wrap {
+  width: 100%;
+  overflow-x: auto;
+  margin-top: 18px;
+}
+
+.trade-table {
+  width: 100%;
+  min-width: 720px;
+  border-collapse: collapse;
+  text-align: left;
+  font-size: 13px;
+}
+
+.trade-table th {
+  background: #f3f7fb;
+  color: #74869a;
+  font-size: 11px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.trade-table th,
+.trade-table td {
+  padding: 13px 12px;
+  border-bottom: 1px solid #e8eef4;
+}
+
+.trade-table tbody tr:hover {
+  background: #f8fbfe;
+}
